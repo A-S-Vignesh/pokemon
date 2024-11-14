@@ -5,10 +5,10 @@ function Footer() {
   let year = d.getFullYear();
 
   return (
-    <div className="footer container-fluid p-4 bg-gray-300">
+    <div className="footer container-fluid p-4 mt-4">
       <div className="row">
-        <h2 className="col-md-6">Made by Vignesh with 💞</h2>
-        <h4 className="col-md-6">©{year} Notes. All rights reserved</h4>
+        <h4 className="col-md-6">Made by Vignesh with 💞</h4>
+        <h6 className="col-md-6">©{year} Notes. All rights reserved</h6>
       </div>
     </div>
   );
