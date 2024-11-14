@@ -5,7 +5,7 @@ function Header() {
     return (
       <header className="container-fluid">
         <div className="row">
-          <div className="col-4">
+          <div className="col-md-4">
             <img
               src={ashpikachuimage}
               className="header-items"
@@ -13,11 +13,11 @@ function Header() {
               height="200px"
             />
           </div>
-          <div className="col-4">
+          <div className="col-md-4">
             <h1 className="header-title header-items">Pokemon</h1>
             <h2>Gotta catch 'em all!</h2>
           </div>
-          <div className="col-4">
+          <div className="col-md-4">
             <img
               src={lucarioimage}
               className="header-items"
