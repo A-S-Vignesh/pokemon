@@ -21,18 +21,19 @@ function Search({
   };
 
   return (
-    <div className="search-box">
+    <>
       <input
         className="search-text"
         type="text"
         name="search"
+        placeholder="Name of the pokemon"
         onChange={(event) => setSearch(event.target.value)}
         value={search}
       />
-      <button className="search-btn" onClick={handleSearch}>
+      <button className="btn btn-primary" onClick={handleSearch}>
         Search
       </button>
-    </div>
+    </>
   );
 }
 

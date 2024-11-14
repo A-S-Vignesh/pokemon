@@ -27,6 +27,7 @@ function FilterBox({
   
   return (
     <div className="filter-box">
+      <p>Enter the name of the pokemon</p>
       <Search
         pokemonName={pokemonName}
         offSet={offSet}
@@ -36,11 +37,11 @@ function FilterBox({
         fetchFilteredData={fetchFilteredData}
       />
 
-      <Random
+      {/* <Random
         pokemonName={pokemonName}
         fetchFilteredData={fetchFilteredData}
         
-      />
+      /> */}
     </div>
   );
 }

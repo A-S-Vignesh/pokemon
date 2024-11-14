@@ -8,7 +8,7 @@ function Random({ pokemonName, fetchFilteredData }) {
     fetchFilteredData(amazedPokemon);
   };
 
-  return <button onClick={AmazeMe}>Amaze me</button>;
+  return <button className="btn btn-warning" onClick={AmazeMe}>Amaze me</button>;
 }
 
 export default Random;
