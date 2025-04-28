@@ -1,8 +1,9 @@
 // routes.js
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import MainBox from "./components/MainBox";
+import Home from "./sections/Home";
 import PokemonDetail from "./sections/PokemonDetail";
+import Pokemon from "./sections/Pokemon";
 
 const appRouter = createBrowserRouter([
   {
@@ -11,7 +12,11 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <MainBox />,
+        element: <Home />,
+      },
+      {
+        path: "/pokemon",
+        element: <Pokemon />,
       },
       {
         path: "/pokemon/:id",
