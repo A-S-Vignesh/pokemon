@@ -1,6 +1,8 @@
 import Search from "./Search";
 import { useEffect, useState } from "react";
 import { getTypeColor } from "../utils/pokemonTypeColors";
+import usePokemonNames from "../hooks/usePokemonNames"; // adjust path if needed
+import pokemonTypes from "../utils/pokemonTypes";
 
 function FilterBox({
   setOffSet,
@@ -10,42 +12,10 @@ function FilterBox({
   offSet,
 })
 {
-  const [pokemonName, setPokemonName] = useState([]);
+  const { pokemonNames, loading, error } = usePokemonNames();
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [showMaxMessage, setShowMaxMessage] = useState(false);
   
-  const pokemonTypes = [
-    { name: 'fire', icon: '🔥' },
-    { name: 'water', icon: '💧' },
-    { name: 'grass', icon: '🌿' },
-    { name: 'electric', icon: '⚡' },
-    { name: 'psychic', icon: '🔮' },
-    { name: 'ice', icon: '❄️' },
-    { name: 'fighting', icon: '🥊' },
-    { name: 'poison', icon: '☠️' },
-    { name: 'ground', icon: '🌍' },
-    { name: 'flying', icon: '🦅' },
-    { name: 'bug', icon: '🐛' },
-    { name: 'rock', icon: '🪨' },
-    { name: 'ghost', icon: '👻' },
-    { name: 'dragon', icon: '🐉' },
-    { name: 'dark', icon: '🌑' },
-    { name: 'steel', icon: '⚔️' },
-    { name: 'fairy', icon: '🧚' },
-    { name: 'normal', icon: '⭐' }
-  ];
-
-  const fetchName = async () => {
-    const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1024`
-    );
-    const data = await response.json();
-    setPokemonName(data.results);
-  };
-
-  useEffect(() => {
-    fetchName();
-  }, []);
 
   const handleTypeClick = async (type) => {
     let newSelectedTypes;
@@ -93,7 +63,7 @@ function FilterBox({
   return (
     <div className="space-y-6">
       <Search
-        pokemonName={pokemonName}
+        pokemonName={pokemonNames}
         offSet={offSet}
         setOffSet={setOffSet}
         setPokemonData={setPokemonData}

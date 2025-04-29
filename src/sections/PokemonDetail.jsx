@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import PokemonName from "../PokemonName";
-import { getTypeColor } from "../utils/pokemonTypeColors";
+import { getTypeColor, getDualTypeColor } from "../utils/pokemonTypeColors";
+
 
 function PokemonDetail() {
   const { id } = useParams();
@@ -46,7 +46,11 @@ function PokemonDetail() {
     );
   }
 
-  const mainTypeColor = getTypeColor(pokemonData.types[0].type.name);
+const types = pokemonData.types.map(t => t.type.name);
+const mainTypeColor = types.length > 1
+  ? getDualTypeColor(types[0], types[1])
+  : getTypeColor(types[0]);
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -166,9 +170,9 @@ function PokemonDetail() {
                   {pokemonData.moves.slice(0, 6).map((move) => (
                     <div
                       key={move.move.name}
-                      className="px-4 py-2 bg-gray-50 rounded-lg border border-gray-100"
+                      className={`px-4 py-2 bg-gradient-to-r ${mainTypeColor} text-white rounded-lg border border-gray-100`}
                     >
-                      <span className="text-sm font-medium text-gray-700 capitalize">
+                      <span className="text-sm font-medium capitalize">
                         {move.move.name.replace('-', ' ')}
                       </span>
                     </div>
@@ -179,14 +183,14 @@ function PokemonDetail() {
               {/* Game Indices */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">Game Data</h3>
-                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                <div className={`bg-gradient-to-r ${mainTypeColor} text-white p-4 rounded-xl border border-gray-100`}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-600">Game Index</span>
-                    <span className="text-sm font-bold text-gray-800">#{pokemonData.game_indices[0]?.game_index || 'N/A'}</span>
+                    <span className="text-sm">Game Index</span>
+                    <span className="text-sm font-bold">#{pokemonData.game_indices[0]?.game_index || 'N/A'}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Base Experience</span>
-                    <span className="text-sm font-bold text-gray-800">{pokemonData.base_experience} XP</span>
+                    <span className="text-sm">Base Experience</span>
+                    <span className="text-sm font-bold">{pokemonData.base_experience} XP</span>
                   </div>
                 </div>
               </div>

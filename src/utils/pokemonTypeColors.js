@@ -17,7 +17,37 @@ export const getTypeColor = (type) => {
     dragon: 'from-indigo-500 to-indigo-700',
     dark: 'from-gray-600 to-gray-800',
     steel: 'from-gray-400 to-gray-600',
-    fairy: 'from-pink-300 to-pink-500'
+    fairy: 'from-pink-300 to-pink-500',
   };
   return typeColors[type] || 'from-gray-400 to-gray-500';
-}; 
+};
+
+export const getDualTypeColor = (type1, type2) => {
+  const colorMap = {
+    normal: 'gray',
+    fire: 'red',
+    water: 'blue',
+    electric: 'yellow',
+    grass: 'green',
+    ice: 'blue',
+    fighting: 'red',
+    poison: 'purple',
+    ground: 'yellow',
+    flying: 'indigo',
+    psychic: 'pink',
+    bug: 'lime',
+    rock: 'yellow',
+    ghost: 'purple',
+    dragon: 'indigo',
+    dark: 'gray',
+    steel: 'gray',
+    fairy: 'pink',
+  };
+
+  const fallback = 'gray';
+  const from = colorMap[type1] || fallback;
+  const to = colorMap[type2] || fallback;
+
+  // Use 400 -> 600 shades for consistency
+  return `from-${from}-400 to-${to}-600`;
+};

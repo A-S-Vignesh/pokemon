@@ -5,6 +5,7 @@ import Home from "./sections/Home";
 import PokemonDetail from "./sections/PokemonDetail";
 import Pokemon from "./sections/Pokemon";
 
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -12,7 +13,7 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Home/>,
       },
       {
         path: "/pokemon",

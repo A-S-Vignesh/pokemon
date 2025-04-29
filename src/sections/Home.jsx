@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useRef } from "react";
 import { Link } from 'react-router-dom';
-import ashpikachuimage from "../assets/ashpikachu.png";
-import lucarioimage from "../assets/lucario.png";
+import featuredTypes from "../utils/pokemonTypes";
 
-function Home() {
-  const featuredTypes = [
-    { name: 'Fire', color: 'bg-red-500', icon: '🔥', description: 'Powerful fire-type Pokémon with burning passion' },
-    { name: 'Water', color: 'bg-blue-500', icon: '💧', description: 'Graceful water-type Pokémon of the seas' },
-    { name: 'Grass', color: 'bg-green-500', icon: '🌿', description: 'Nature-loving grass-type Pokémon' },
-    { name: 'Electric', color: 'bg-yellow-400', icon: '⚡', description: 'Energetic electric-type Pokémon' }
-  ];
+
+const Home = () => {
+  const scrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -320 : 320,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const stats = [
     { number: '898+', label: 'Pokémon' },
@@ -18,55 +22,9 @@ function Home() {
     { number: '171M+', label: 'Games Sold' }
   ];
 
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-white py-24">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            {/* Left Side - Ash & Pikachu */}
-            <div className="w-48 md:w-72 relative group">
-              <div className="relative transform transition-transform duration-300 group-hover:scale-105">
-                <img
-                  src={ashpikachuimage}
-                  className="w-full h-auto object-contain"
-                  alt="Ash and Pikachu"
-                />
-              </div>
-            </div>
-
-            {/* Center - Welcome Text */}
-            <div className="text-center flex-1">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-                Welcome to the World of Pokémon
-              </h1>
-              <p className="text-xl text-gray-600 mb-8">
-                Explore, discover, and learn about all your favorite Pokémon
-              </p>
-              <Link
-                to="/pokemon"
-                className="inline-flex items-center px-8 py-4 rounded-full bg-red-500 text-white font-bold text-lg hover:bg-red-600 transition-colors duration-300"
-              >
-                Explore Pokédex
-                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Right Side - Lucario */}
-            <div className="w-48 md:w-72 relative group">
-              <div className="relative transform transition-transform duration-300 group-hover:scale-105">
-                <img
-                  src={lucarioimage}
-                  className="w-full h-auto object-contain"
-                  alt="Lucario"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Stats Section */}
       <section className="bg-gray-50 py-16">
@@ -88,19 +46,48 @@ function Home() {
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
             Discover Pokémon Types
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredTypes.map((type, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl shadow-lg p-6 transform hover:-translate-y-1 transition-transform duration-300"
-              >
-                <div className={`${type.color} w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-4`}>
-                  {type.icon}
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{type.name}</h3>
-                <p className="text-gray-600">{type.description}</p>
-              </div>
-            ))}
+          <div className="relative">
+            {/* Left Arrow */}
+            <button
+              onClick={() => scroll("left")}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2 hover:bg-gray-100 transition"
+              aria-label="Scroll left"
+              type="button"
+            >
+              <span className="text-2xl">←</span>
+            </button>
+            {/* Scrollable Types */}
+            <div
+              ref={scrollRef}
+              className="flex overflow-x-auto gap-6 scrollbar-hide pokemon-type-scroller"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {(featuredTypes || []).length === 0 ? (
+                <div className="text-gray-500 text-center w-full">No types to display.</div>
+              ) : (
+                (featuredTypes).map((type, index) => (
+                  <div
+                    key={index}
+                    className="min-w-[260px] bg-white rounded-xl shadow-md p-6 m-4 flex-shrink-0 transform hover:-translate-y-1 transition-transform duration-300"
+                  >
+                    <div className={`${type.color} w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-4`}>
+                      {type.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">{type.name}</h3>
+                    <p className="text-gray-600">{type.description}</p>
+                  </div>
+                ))
+              )}
+            </div>
+            {/* Right Arrow */}
+            <button
+              onClick={() => scroll("right")}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2 hover:bg-gray-100 transition"
+              aria-label="Scroll right"
+              type="button"
+            >
+              <span className="text-2xl">→</span>
+            </button>
           </div>
         </div>
       </section>
@@ -112,21 +99,21 @@ function Home() {
             Why Choose Our Pokédex?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-md">
               <div className="text-3xl mb-4">🔍</div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Comprehensive Data</h3>
               <p className="text-gray-600">
                 Access detailed information about every Pokémon, including stats, abilities, and evolution chains.
               </p>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-md">
               <div className="text-3xl mb-4">⚡</div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Fast & Responsive</h3>
               <p className="text-gray-600">
                 Enjoy a smooth and responsive experience while browsing through your favorite Pokémon.
               </p>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl p-6 shadow-md">
               <div className="text-3xl mb-4">❤️</div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Save Favorites</h3>
               <p className="text-gray-600">
@@ -159,6 +146,6 @@ function Home() {
       </section>
     </div>
   );
-}
+};
 
 export default Home;

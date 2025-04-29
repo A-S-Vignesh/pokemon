@@ -1,7 +1,6 @@
-// usePokemonNames.js
 import { useState, useEffect } from "react";
 
-const PokemonName = () => {
+const usePokemonNames = () => {
   const [pokemonNames, setPokemonNames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,6 +14,8 @@ const PokemonName = () => {
       setPokemonNames(data.results);
     } catch (e) {
       setError(e);
+    } finally {
+      setLoading(false); // very important!
     }
   };
 
@@ -25,4 +26,4 @@ const PokemonName = () => {
   return { pokemonNames, loading, error };
 };
 
-export default PokemonName;
+export default usePokemonNames;
